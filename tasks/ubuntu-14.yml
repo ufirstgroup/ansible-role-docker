@@ -2,24 +2,18 @@
 
 - name: install docker-py (required by ansible docker module)
   pip: name=docker-py state=present
-  tags: docker
 
 - name: add apt key
   apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D
-  tags: docker
 
 - name: add apt repository
   apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-{{ansible_lsb.codename}} main' state=present
-  tags: docker
 
 - name: install linux-image-extra
   apt: name=linux-image-extra-{{ansible_kernel}} state=present
-  tags: docker
 
 - name: install docker
   apt: name=docker-engine state=latest
-  tags: docker
 
 - name: make sure the service is running
   service: name=docker enabled=yes state=started
-  tags: docker
