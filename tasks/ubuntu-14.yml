@@ -1,5 +1,8 @@
 ---
 
+- name: make sure pip is installed (for installing docker-py which is required by ansible docker module)
+  apt: name=python-pip state=present
+
 - name: install docker-py (required by ansible docker module)
   pip: name=docker-py state=present
 
