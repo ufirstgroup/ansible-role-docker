@@ -1,0 +1,5 @@
+---
+
+- name: only for Ubuntu major >= 14
+  include: ubuntu-14.yml
+  when: ansible_lsb.id == "Ubuntu" and ansible_lsb.major_release|int >= 14
