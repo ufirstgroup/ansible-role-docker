@@ -1,0 +1,35 @@
+---
+
+- name: make sure pip is installed (for installing docker-py which is required by ansible docker module)
+  apt:
+    name: python-pip
+    state: present
+
+- name: install docker-py (required by ansible docker module)
+  pip:
+    name: docker-py
+    state: present
+
+- name: add apt key
+  apt_key:
+    keyserver: "{{ key_server }}"
+    id: "{{ key_server_public_key }}"
+
+- name: add apt repository
+  apt_repository:
+    repo: 'deb https://apt.dockerproject.org/repo ubuntu-{{ansible_lsb.codename}} main'
+    state: present
+
+- name: install linux-image-extra
+  apt: name=linux-image-extra-{{ansible_kernel}} state=present
+
+- name: install docker
+  apt:
+    name: docker-engine
+    state: latest
+
+- name: make sure the service is running
+  service:
+    name: docker
+    enabled: yes
+    state: started

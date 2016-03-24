@@ -1,0 +1,53 @@
+---
+
+- name: make sure pip is installed (for installing docker-py which is required by ansible docker module)
+  apt:
+    name: python-pip
+    state: present
+
+- name: install docker-py (required by ansible docker module)
+  pip:
+    name: docker-py
+    state: present
+
+- name: add apt key
+  apt_key:
+    keyserver: "{{ key_server }}"
+    id: "{{ key_server_public_key }}"
+
+- name: add apt repository
+  apt_repository:
+    repo: 'deb https://apt.dockerproject.org/repo ubuntu-{{ansible_lsb.codename}} main'
+    state: present
+
+- name: Create systemd config directory
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Use overlay storage driver
+  copy:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: default_docker.conf
+      dest: /etc/default/docker
+    - src: systemd_docker_overlay.conf
+      dest: /etc/systemd/system/docker.service.d/overlay.conf
+
+- name: install docker
+  apt:
+    name: docker-engine
+    state: latest
+
+- name: make sure the service is running
+  service:
+    name: docker
+    enabled: yes
+    state: started

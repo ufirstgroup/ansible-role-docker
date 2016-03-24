@@ -1,0 +1,6 @@
+---
+
+kernel_version: ansible_kernel|regex_replace('^([0-9]+\.[0-9]+)\..*$', '\\1')|float
+
+key_server: hkp://p80.pool.sks-keyservers.net:80 
+key_server_public_key: 58118E89F3A912897C070ADBF76221572C52609D
