@@ -2,14 +2,14 @@
 
 - name: only for Ubuntu major >= 14 and old Linux kernels
   include: ubuntu-14-old-linux.yml
-  when: ansible_lsb.id == "Ubuntu" and ansible_lsb.major_release|int >= 14 and kernel_version < 3.18
+  when: ansible_lsb.id == "Ubuntu" and ansible_lsb.major_release|int >= 14 and kernel_version|float < 3.18
   tags: docker
   become: yes
   become_user: root
 
 - name: only for Ubuntu major >= 14 and Linux kernel >= 3.18
   include: ubuntu-14-linux-3-18.yml
-  when: ansible_lsb.id == "Ubuntu" and ansible_lsb.major_release|int >= 14 and kernel_version >= 3.18
+  when: ansible_lsb.id == "Ubuntu" and ansible_lsb.major_release|int >= 14 and kernel_version|float >= 3.18
   tags: docker
   become: yes
   become_user: root
