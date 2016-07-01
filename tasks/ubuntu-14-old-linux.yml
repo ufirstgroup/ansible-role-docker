@@ -8,7 +8,7 @@
 - name: install docker-py (required by ansible docker module)
   pip:
     name: docker-py
-    state: present
+    state: latest
 
 - name: add apt key
   apt_key:
