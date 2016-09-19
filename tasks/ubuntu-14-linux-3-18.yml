@@ -9,6 +9,7 @@
   pip:
     name: docker-py
     state: latest
+    version: "1.9.0"
 
 - name: add apt key
   apt_key:
