@@ -47,10 +47,12 @@
     name: docker-engine
     state: latest
 
+# see https://docs.docker.com/compose/install/
 - name: install docker-compose
-  apt:
-    name: docker-compose
-    state: latest
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.9.0/docker-compose-{{ansible_system}}-{{ansible_machine}}
+    dest: /usr/local/bin/docker-compose
+    mode: 0755
 
 - name: make sure the service is running
   service:
