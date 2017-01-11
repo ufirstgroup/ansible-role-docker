@@ -47,6 +47,11 @@
     name: docker-engine
     state: latest
 
+- name: install docker-compose
+  apt:
+    name: docker-compose
+    state: latest
+
 - name: make sure the service is running
   service:
     name: docker
