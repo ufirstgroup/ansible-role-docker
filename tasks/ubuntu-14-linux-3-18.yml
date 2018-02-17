@@ -5,11 +5,15 @@
     name: python-pip
     state: present
 
-- name: install docker-py (required by ansible docker module)
+- name: uninstall old docker-py
   pip:
     name: docker-py
-    state: present
-    version: "1.9.0"
+    state: absent
+
+- name: install docker-py (required by ansible docker module)
+  pip:
+    name: docker
+    state: latest
 
 - name: add apt key
   apt_key:
